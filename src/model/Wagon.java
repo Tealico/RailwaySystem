@@ -1,14 +1,14 @@
 package model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Wagon {
 	private int id;
 	private int number;
 	private String description;
-	private Seat[] seats;
+	private ArrayList<Seat> seats;
 	
-	public Wagon(int id, int number, String description, Seat[] seats) {
+	public Wagon(int id, int number,String description, ArrayList<Seat> seats) {
 		this.id = id;
 		this.number = number;
 		this.description = description;
@@ -38,15 +38,14 @@ public class Wagon {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Seat[] getSeats() {
+	public ArrayList<Seat> getSeats() {
 		return seats;
 	}
-	public void setSeats(Seat[] seats) {
+	public void setSeats(ArrayList<Seat> seats) {
 		this.seats = seats;
 	}
 	@Override
 	public String toString() {
-		return "Wagon [id=" + id + ", number=" + number + ", description=" + description + ", seats="
-				+ Arrays.toString(seats) + "]";
+		return "Wagon [id=" + id + ", number=" + number + ", description=" + description + ", seats=" + seats + "]";
 	}
 }
