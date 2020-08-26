@@ -181,6 +181,7 @@ public class Register extends JFrame {
 	}
 	
 	private void changeView() {
+		this.hide();
 		LogIn frame = new LogIn();
 		frame.setVisible(true);
 	}

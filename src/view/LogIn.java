@@ -140,6 +140,7 @@ public class LogIn extends JFrame {
 	}
 	
 	private void changeView() {
+		this.hide();
 		Register frame = new Register();
   	  	frame.setVisible(true);
 	}
