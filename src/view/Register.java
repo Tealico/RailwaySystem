@@ -46,7 +46,7 @@ public class Register extends JFrame {
 
 	
 	public Register(){
-		setIconImage(Toolkit.getDefaultToolkit().getImage("\\img\\trainIcon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Tea\\Desktop\\java\\New folder\\RailwaySystem\\img\\trainIcon.png"));
 		setResizable(false);
 		setTitle("Welcome");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

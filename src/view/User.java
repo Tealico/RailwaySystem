@@ -8,12 +8,14 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 public class User {
 
-	private JFrame frame;
+	private JFrame frmHome;
 
 	
 	public static void main(String[] args) {
@@ -21,7 +23,7 @@ public class User {
 			public void run() {
 				try {
 					User window = new User();
-					window.frame.setVisible(true);
+					window.frmHome.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,12 +38,14 @@ public class User {
 
 	
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setForeground(new Color(100, 149, 237));
+		frmHome = new JFrame();
+		frmHome.setTitle("Home");
+		frmHome.getContentPane().setForeground(new Color(100, 149, 237));
+		frmHome.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Tea\\Desktop\\java\\New folder\\RailwaySystem\\img\\trainIcon.png"));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 139, 139));
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		frmHome.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
@@ -94,7 +98,7 @@ public class User {
 		btnLogOut.setIcon(new ImageIcon("C:\\Users\\Tea\\Desktop\\java\\New folder\\RailwaySystem\\img\\icons8-sign-out-30.png"));
 		btnLogOut.setBounds(0, 0, 118, 37);
 		panel_3.add(btnLogOut);
-		frame.setBounds(100, 100, 676, 492);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmHome.setBounds(100, 100, 676, 492);
+		frmHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

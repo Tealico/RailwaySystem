@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -36,8 +38,9 @@ public class Admin {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Tea\\Desktop\\java\\New folder\\RailwaySystem\\img\\trainIcon.png"));
 		frame.getContentPane().setForeground(new Color(100, 149, 237));
-		
+		frame.setTitle("Admin");
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 139, 139));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
