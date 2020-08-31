@@ -8,6 +8,7 @@ import model.User;
 
 public class Login {
 	AuthenticationService auth = new AuthenticationService();
+	
 	public void loginMenu() {
 			
 		Scanner in=new Scanner(System.in);

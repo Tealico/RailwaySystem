@@ -23,4 +23,13 @@ public class AuthenticationService {
 		}
 	}
 	
+	public void register(User u) {
+	
+		if(u.getUsername().equals(testUser.getUsername())) {
+			throw new CustomException("Username alredy exist");
+		}
+		
+		System.out.println("Registering..");
+	}
+	
 }
