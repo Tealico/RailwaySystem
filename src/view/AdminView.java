@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 import model.User;
 
-public class Admin {
+public class AdminView {
 	private User user;
-	public Admin(User user) {
+	public AdminView(User user) {
 		this.user = user;
 	}
 	
@@ -40,7 +40,7 @@ public class Admin {
 //			new Users().usersMenu();
 //		}
 		else if(number == 5) {
-			new Trip().tripMenu(1);
+			new TripView().tripMenu(1);
 		}
 //		else if(number > 5 || number < 1 ) {
 //			System.out.println("Wrong menu.");

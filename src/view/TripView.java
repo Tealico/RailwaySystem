@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-public class Trip {
+public class TripView {
 	public void tripMenu(int userType) {
 		System.out.println("Trip");
 		System.out.println("-------------------");

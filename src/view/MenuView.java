@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-public class Menu {
+public class MenuView {
 
 	public void start() {
 		System.out.println("Welcome");
@@ -16,9 +16,9 @@ public class Menu {
 		System.out.print("Put the number: ");
 		int number = in.nextInt();
 		if(number == 1) {
-			new Register().registerMenu();
+			new RegisterView().registerMenu();
 		} else if(number == 2) {
-			new Login().loginMenu();
+			new LoginView().loginMenu();
 		}
 		else if(number > 2 || number < 1 ) {
 			System.out.println("Wrong menu.");

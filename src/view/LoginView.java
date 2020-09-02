@@ -6,7 +6,7 @@ import exception.CustomException;
 import service.AuthenticationService;
 import model.User;
 
-public class Login {
+public class LoginView {
 	AuthenticationService auth = new AuthenticationService();
 	
 	public void loginMenu() {
@@ -25,9 +25,14 @@ public class Login {
 		
 		try {
 			auth.login(user);
+			//User logUser = auth.login(user);
+//			if(logUser!=null && logUser.getrolId==1) {
+//				new Admin(logUser).adminMenu();
+//			}
 		}catch(CustomException exception) {
 			System.out.println(exception.getMessage());
 			this.loginMenu();
 		}
+		
 	}
 }

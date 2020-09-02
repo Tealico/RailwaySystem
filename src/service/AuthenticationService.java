@@ -2,20 +2,20 @@ package service;
 
 import exception.CustomException;
 import model.User;
-import view.Admin;
-import view.Customer;
+import view.AdminView;
+import view.CustomerView;
 
 
 public class AuthenticationService {
-	private User testUser = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", 1, null); 
+	User testUser = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", 1, null); 
 	
 	public void login(User u) {
 		if(u.getUsername().equals(testUser.getUsername()) && u.getPassword().equals(testUser.getPassword())) {
 			if(testUser.getType() == 1) {
-				new Admin(testUser).adminMenu();
+				new AdminView(testUser).adminMenu();
 			}
 			else if(testUser.getType() == 2) {
-				new Customer().userMenu();
+				new CustomerView().userMenu();
 			}
 		}
 		else {

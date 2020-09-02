@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-public class Customer {
+public class CustomerView {
 	public void userMenu() {
 		System.out.println("User");
 		System.out.println("---------------------");
@@ -24,7 +24,7 @@ public class Customer {
 //			new Reservation().reservationMenu();
 //		}
 		else if(number == 3) {
-			new Trip().tripMenu(2);
+			new TripView().tripMenu(2);
 		}
 //		else if(number > 3 || number < 1 ) {
 //			System.out.println("Wrong menu.");

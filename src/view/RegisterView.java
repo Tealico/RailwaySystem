@@ -7,7 +7,7 @@ import model.User;
 import service.AuthenticationService;
 
 
-public class Register {
+public class RegisterView {
 	AuthenticationService auth = new AuthenticationService();
 	
 	public void registerMenu() {
@@ -40,7 +40,7 @@ public class Register {
 		user.setEmail(email);
 		try {
 			auth.register(user);
-			new Login().loginMenu();
+			new LoginView().loginMenu();
 		}
 		catch(CustomException exception) {
 			System.out.println(exception.getMessage());
