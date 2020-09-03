@@ -6,6 +6,7 @@ import model.User;
 
 public class AdminView {
 	private User user;
+	
 	public AdminView(User user) {
 		this.user = user;
 	}

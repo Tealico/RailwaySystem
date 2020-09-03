@@ -4,20 +4,18 @@ import java.util.ArrayList;
 
 import exception.CustomException;
 import model.User;
+import repository.UserRepository;
 import view.AdminView;
 import view.CustomerView;
 
 
 public class AuthenticationService {
-	User admin = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", 1, null); 
 	
-	private ArrayList<User> users; 
+	UserRepository userRepository = new UserRepository();
 	
-	public AuthenticationService() {
-		users=new ArrayList<User>();
-		users.add(admin);
-	}
 	public User login(User u) {
+		ArrayList<User> users = userRepository.getAll();
+		
 		for(User user : users) {
 			if(u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				return user;
@@ -27,13 +25,15 @@ public class AuthenticationService {
 	}
 	
 	public void register(User u) {
+		ArrayList<User> users = userRepository.getAll();
+		
 		for(User user : users ) {
 			if(u.getUsername().equals(user.getUsername())) {
 				throw new CustomException("Username alredy exist");
 			}
 		}
 		u.setType(2);
-		users.add(u);
+		userRepository.addUser(u);
 	}
 	
 }

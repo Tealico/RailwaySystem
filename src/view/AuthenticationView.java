@@ -13,6 +13,8 @@ public class AuthenticationView {
 	public void loginMenu() {
 			
 		Scanner in=new Scanner(System.in);
+		System.out.println("Login");
+		System.out.println("--------------------------");
 		System.out.print("Username: ");
 		String username=in.next();
 		System.out.println("--------------------------");
@@ -31,7 +33,7 @@ public class AuthenticationView {
 				new AdminView(logedUser).adminMenu();
 			}
 			else if(logedUser.getType() == 2) {
-				new CustomerView().userMenu();
+				new CustomerView(logedUser).userMenu();
 			}
 			
 		}catch(CustomException exception) {
@@ -42,6 +44,8 @@ public class AuthenticationView {
 	}
 	public void registerMenu() {
 		Scanner in=new Scanner(System.in);
+		System.out.println("Register");
+		System.out.println("--------------------------");
 		System.out.print("First name: ");
 		String firstName=in.next();
 		System.out.println("--------------------------");

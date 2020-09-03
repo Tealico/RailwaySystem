@@ -2,7 +2,15 @@ package view;
 
 import java.util.Scanner;
 
+import model.User;
+
 public class CustomerView {
+	private User user;
+	
+	public CustomerView(User user) {
+		this.user = user;
+	}
+	
 	public void userMenu() {
 		System.out.println("User");
 		System.out.println("---------------------");
