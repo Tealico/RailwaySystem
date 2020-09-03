@@ -3,7 +3,8 @@ package view;
 import java.util.Scanner;
 
 public class MenuView {
-
+	AuthenticationView authView =new AuthenticationView();
+	
 	public void start() {
 		System.out.println("Welcome");
 		System.out.println("---------------------");
@@ -16,9 +17,9 @@ public class MenuView {
 		System.out.print("Put the number: ");
 		int number = in.nextInt();
 		if(number == 1) {
-			new RegisterView().registerMenu();
+			authView.registerMenu();
 		} else if(number == 2) {
-			new LoginView().loginMenu();
+			authView.loginMenu();
 		}
 		else if(number > 2 || number < 1 ) {
 			System.out.println("Wrong menu.");
