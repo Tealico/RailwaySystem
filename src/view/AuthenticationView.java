@@ -5,6 +5,7 @@ import java.util.Scanner;
 import exception.CustomException;
 import model.User;
 import service.AuthenticationService;
+import util.UserType;
 
 public class AuthenticationView {
 	
@@ -29,10 +30,10 @@ public class AuthenticationView {
 		try {
 			User logedUser = auth.login(user);
 			
-			if(logedUser.getType() == 1) {
+			if(logedUser.getType() == UserType.ADMIN) {
 				new AdminView(logedUser).adminMenu();
 			}
-			else if(logedUser.getType() == 2) {
+			else if(logedUser.getType() == UserType.CUSTOMER) {
 				new CustomerView(logedUser).userMenu();
 			}
 			

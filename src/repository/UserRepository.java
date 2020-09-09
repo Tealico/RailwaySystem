@@ -3,10 +3,10 @@ package repository;
 import java.util.ArrayList;
 
 import model.User;
+import util.UserType;
 
 public class UserRepository {
-	User admin = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", 1, null); 
-	
+	User admin = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", UserType.ADMIN, null); 
 	private ArrayList<User> users; 
 	
 	public UserRepository() {

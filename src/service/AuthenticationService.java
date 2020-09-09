@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import exception.CustomException;
 import model.User;
 import repository.UserRepository;
+import util.UserType;
 import view.AdminView;
 import view.CustomerView;
 
@@ -32,7 +33,7 @@ public class AuthenticationService {
 				throw new CustomException("Username alredy exist");
 			}
 		}
-		u.setType(2);
+		u.setType(UserType.CUSTOMER);
 		userRepository.addUser(u);
 	}
 	
