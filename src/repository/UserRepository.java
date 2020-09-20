@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.CustomException;
 import model.User;
 import util.ConnectionManager;
 import util.UserType;
@@ -13,22 +14,40 @@ import util.UserType;
 public class UserRepository {
 	User admin = new User(1, "Tea", "Lico", "tealico", "tea1234", 21, "tea@gmail.com", "696969696", UserType.ADMIN, null); 
 	
-	
 	private final String GET_USER_BY_USERNAME_PASSWORD = ""
 			+ "select users.user_id as id,users.firstname, users.lastname, users.age, users.email, users.username,usertype.type as userType "
 			+ "from users "
 			+ "join usertype on usertype.id=users.usertype_id "
 			+ "where users.username = ? and users.password = ?";
 	
-	public User getUserByUsernamePassword(User u) {
+	private final String ADD_USER = "INSERT INTO users (firstname,lastname,username,password,age,email,usertype_id) VALUES(?,?,?,?,?,?,?)";
+	
+	public void addUser(User u) throws CustomException {
+		try{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER);
+			
+			preparedStatement.setString(1,u.getFirstName());
+			preparedStatement.setString(2,u.getLastName());
+			preparedStatement.setString(3,u.getUsername());
+			preparedStatement.setString(4,u.getPassword());
+			preparedStatement.setInt(5,u.getAge());
+			preparedStatement.setString(6,u.getEmail());
+			preparedStatement.setInt(7,2); 
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+//			System.out.println("error " + e);
+			throw new CustomException("Username already exist.");
+		}
+	}
+	public User getUserByUsernamePassword(User u) throws CustomException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME_PASSWORD);
 			preparedStatement.setString(1, u.getUsername());
 			preparedStatement.setString(2, u.getPassword());
 			ResultSet result = preparedStatement.executeQuery();
-			
-//			System.out.println("query -> " + preparedStatement.toString());
+
 			
 			if(result.next()) {
 				User user = new User();
@@ -46,10 +65,11 @@ public class UserRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error " + e);
-			return null;
+//			System.out.println("error " + e);
+			throw new CustomException("Something went wrong.");
 		}
 	}
+	
 	
 	private ArrayList<User> users; 
 	
@@ -62,9 +82,9 @@ public class UserRepository {
 		return this.users;
 	}
 	
-	public void addUser(User u) {
-		users.add(u);
-	}
+//	public void addUser(User u) {
+//		users.add(u);
+//	}
 	
 	public void deleteUser(User u) {
 		for(User user : users) {

@@ -1,18 +1,15 @@
 package service;
 
-import java.util.ArrayList;
-
 import exception.CustomException;
 import model.User;
 import repository.UserRepository;
-import util.UserType;
 
 
 public class AuthenticationService {
 	
 	UserRepository userRepository = new UserRepository();
 	
-	public User login(User u) {
+	public User login(User u) throws CustomException {
 		User user = userRepository.getUserByUsernamePassword(u);
 		if(user == null) {
 			throw new CustomException("Incorrect username or password.");	
@@ -20,16 +17,7 @@ public class AuthenticationService {
 		return user;
 	}
 	
-	public void register(User u) {
-		ArrayList<User> users = userRepository.getAll();
-		
-		for(User user : users ) {
-			if(u.getUsername().equals(user.getUsername())) {
-				throw new CustomException("Username alredy exist");
-			}
-		}
-		u.setType(UserType.CUSTOMER);
+	public void register(User u) throws CustomException {
 		userRepository.addUser(u);
 	}
-	
 }

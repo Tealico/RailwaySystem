@@ -30,8 +30,6 @@ public class AuthenticationView {
 		try {
 			User logedUser = auth.login(user);
 			
-			System.out.println(logedUser.toString());
-			System.exit(0);
 			if(logedUser.getType() == UserType.ADMIN) {
 				new AdminView(logedUser).adminMenu();
 			}
