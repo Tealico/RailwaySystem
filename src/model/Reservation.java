@@ -4,21 +4,18 @@ public class Reservation {
 	private int id;
 	private String date;
 	private int price;
-	private Wagon wagon;
 	private Seat seat;
 	
-	public Reservation(int id, String date, int price, Wagon wagon, Seat seat) {
+	public Reservation(int id, String date, int price, Seat seat) {
 		this.id = id;
 		this.date = date;
 		this.price = price;
-		this.wagon = wagon;
 		this.seat = seat;
 	}
 	public Reservation() {
 		this.id = 0;
 		this.date = "";
 		this.price = 0;
-		this.wagon = new Wagon();
 		this.seat = new Seat();
 	}
 	public int getId() {
@@ -39,12 +36,6 @@ public class Reservation {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public Wagon getWagon() {
-		return wagon;
-	}
-	public void setWagon(Wagon wagon) {
-		this.wagon = wagon;
-	}
 	public Seat getSeat() {
 		return seat;
 	}
@@ -53,7 +44,8 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", date=" + date + ", price=" + price + ", wagon=" + wagon + ", seat=" + seat
-				+ "]";
+		return "Reservation [id=" + id + ", date=" + date + ", price=" + price + ", seat=" + seat + "]";
 	}
 }
+	
+	
