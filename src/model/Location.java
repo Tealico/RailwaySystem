@@ -3,57 +3,58 @@ package model;
 public class Location {
 	private int id;
 	private String name;
-	private String address;
+	private String startlocation;
+	private String endlocation;
 	private Boolean available;
-
-	public Location(int id, String name, String address, Boolean available) {
+	
+	public Location(int id, String name, String startlocation, String endlocation, Boolean available) {
 		this.id = id;
 		this.name = name;
-		this.address = address;
+		this.startlocation = startlocation;
+		this.endlocation = endlocation;
 		this.available = available;
 	}
-
 	public Location() {
 		this.id = 0;
 		this.name = "";
-		this.address = "";
+		this.startlocation = "";
+		this.endlocation = "";
 		this.available = false;
 	}
-
 	public int getId() {
-		return id;
+		return this.id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getName() {
-		return name;
+		return this.name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getAddress() {
-		return address;
+	public String getStartlocation() {
+		return this.startlocation;
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStartlocation(String startlocation) {
+		this.startlocation = startlocation;
 	}
-
+	public String getEndlocation() {
+		return this.endlocation;
+	}
+	public void setEndlocation(String endlocation) {
+		this.endlocation = endlocation;
+	}
 	public Boolean getAvailable() {
-		return available;
+		return this.available;
 	}
-
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
-
 	@Override
 	public String toString() {
-		return "Location [id=" + id + ", name=" + name + ", address=" + address + ", available=" + available + "]";
+		return "Location [id=" + this.id + ", name=" + this.name + ", startlocation=" + this.startlocation
+				+ ", endlocation=" + this.endlocation + ", available=" + this.available + "]";
 	}
 }
+	

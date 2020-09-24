@@ -3,19 +3,19 @@ package model;
 public class Reservation {
 	private int id;
 	private String date;
-	private int price;
+	private int totalprice;
 	private Seat seat;
 	
-	public Reservation(int id, String date, int price, Seat seat) {
+	public Reservation(int id, String date, int totalprice, Seat seat) {
 		this.id = id;
 		this.date = date;
-		this.price = price;
+		this.totalprice = totalprice;
 		this.seat = seat;
 	}
 	public Reservation() {
 		this.id = 0;
 		this.date = "";
-		this.price = 0;
+		this.totalprice = 0;
 		this.seat = new Seat();
 	}
 	public int getId() {
@@ -30,11 +30,11 @@ public class Reservation {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getPrice() {
-		return price;
+	public int getTotalprice() {
+		return totalprice;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setTotalprice(int totalprice) {
+		this.totalprice = totalprice;
 	}
 	public Seat getSeat() {
 		return seat;
@@ -44,7 +44,7 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", date=" + date + ", price=" + price + ", seat=" + seat + "]";
+		return "Reservation [id=" + id + ", date=" + date + ", totalprice=" + totalprice + ", seat=" + seat + "]";
 	}
 }
 	
