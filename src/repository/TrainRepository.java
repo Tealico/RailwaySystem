@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Train;
 import util.ConnectionManager;
@@ -16,7 +17,7 @@ public class TrainRepository {
 	public final String GET_TRAIN_BY_ID="select * from train"
 			+ "where train.train_id=?"
 			+ "order by train.train_id";
-	
+	public final String GET_ALL_TRAIN="select * from train";
 	public void addTrain(Train train) {
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -73,6 +74,26 @@ public class TrainRepository {
 			System.out.println("error " + e);
 		}
 		return null;
+	}
+	public ArrayList<Train> getAllTrain() {
+		ArrayList<Train> train = new ArrayList<>();
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TRAIN);
+			ResultSet result = preparedStatement.executeQuery();
+
+			while (result.next()) {
+				Train trains = new Train();
+				trains.setId(result.getInt("id"));
+				trains.setAvailable(result.getBoolean("available"));
+				trains.setDescription(result.getString("description"));
+				train.add(trains);
+			} 
+			return train;
+		}catch (SQLException e) {
+			System.out.println("error " + e);
+			return null;
+		}
 	}
 }
 
