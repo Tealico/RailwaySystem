@@ -32,7 +32,7 @@ public class CustomerView {
 //			new Reservation().reservationMenu();
 //		}
 		else if(number == 3) {
-			new TripView().tripMenu(2);
+			new TripView(this).tripMenu(user);
 		}
 //		else if(number > 3 || number < 1 ) {
 //			System.out.println("Wrong menu.");

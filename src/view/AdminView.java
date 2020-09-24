@@ -37,11 +37,11 @@ public class AdminView {
 //		else if(number == 3) {
 //			new Location().locationMenu();
 //		}
-//		else if(number == 4) {
-//			new Users().usersMenu();
-//		}
+		else if(number == 4) {
+			new UsersView(this).usersMenu();
+		}
 		else if(number == 5) {
-			new TripView().tripMenu(1);
+			new TripView(this).tripMenu(user);
 		}
 //		else if(number > 5 || number < 1 ) {
 //			System.out.println("Wrong menu.");

@@ -2,8 +2,22 @@ package view;
 
 import java.util.Scanner;
 
+import model.User;
+import util.UserType;
+
 public class TripView {
-	public void tripMenu(int userType) {
+	private AdminView adminHome;
+	private CustomerView customerHome;
+	
+	public TripView(AdminView home) {
+		this.adminHome = home;
+	}
+	
+	public TripView(CustomerView home) {
+		this.customerHome = home;
+	}
+	
+	public void tripMenu(User user) {
 		System.out.println("Trip");
 		System.out.println("-------------------");
 		System.out.println("1 | List Trips");
@@ -11,8 +25,10 @@ public class TripView {
 		
 		Scanner in=new Scanner(System.in);
 		
-		if(userType == 1) {
+		if(user.getType() == UserType.ADMIN) {
 			System.out.println("2 | Create Trip");
+			System.out.println("-------------------");
+			System.out.println("3 | Home");
 			System.out.println("-------------------");
 			System.out.print("Put the number: ");
 			int number = in.nextInt();
@@ -22,11 +38,19 @@ public class TripView {
 			else if(number == 2) {
 				
 			}
-		}else if (userType == 2) {
+			else if(number == 3) {
+				adminHome.adminMenu();
+			}
+		}else if (user.getType() == UserType.CUSTOMER) {
+			System.out.println("2 | Home");
+			System.out.println("-------------------");
 			System.out.print("Put the number: ");
 			int number = in.nextInt();
 			if(number == 1) {
 				this.tripList();
+			}
+			else if(number == 2) {
+				customerHome.userMenu();
 			}
 		}
 	}

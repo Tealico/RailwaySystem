@@ -12,7 +12,6 @@ public class AuthenticationView {
 	AuthenticationService auth = new AuthenticationService();
 	
 	public void loginMenu() {
-			
 		Scanner in=new Scanner(System.in);
 		System.out.println("Login");
 		System.out.println("--------------------------");
