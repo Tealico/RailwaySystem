@@ -31,9 +31,9 @@ public class AdminView {
 		if(number == 1) {
 //			new Profile().profileMenu();
 		}
-//		else if(number == 2) {
-//			new Train().trainMenu();
-//		}
+		else if(number == 2) {
+			new TrainView(this).trainMenu();
+		}
 //		else if(number == 3) {
 //			new Location().locationMenu();
 //		}

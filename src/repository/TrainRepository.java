@@ -12,12 +12,14 @@ import util.ConnectionManager;
 public class TrainRepository {
 	public final String ADD_TRAIN="INSERT INTO train(available,description) VALUES(?,?)";
 	public final String DELETE_TRAIN="delete from train where train.train_id=?";
-	public final String UPDATE_TRAIN="select * from train"
-			+ "set available=?,set description=?";
-	public final String GET_TRAIN_BY_ID="select * from train"
-			+ "where train.train_id=?"
+	public final String UPDATE_TRAIN="update train "
+			+ "set available=?,description=? "
+			+ "where train.train_id=?";
+	public final String GET_TRAIN_BY_ID="select * from train "
+			+ "where train.train_id=?";
+	public final String GET_ALL_TRAINS="select * from train "
 			+ "order by train.train_id";
-	public final String GET_ALL_TRAIN="select * from train";
+	
 	public void addTrain(Train train) {
 		try{
 			Connection connection = ConnectionManager.getConnection();
@@ -50,6 +52,7 @@ public class TrainRepository {
 			
 			if(result.next()) {
 				Train train= new Train();
+				train.setId(result.getInt("train_id"));
 				train.setAvailable(result.getBoolean("available"));
 				train.setDescription(result.getString("description"));
 				return train;
@@ -62,34 +65,36 @@ public class TrainRepository {
 		return null;
 	}
 	
-	public Train updateTrain(Boolean available,String description) {
+	public Train updateTrain(Train train) {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TRAIN);
-			preparedStatement.setBoolean(1,available);
-			preparedStatement.setString(2,description);
+			preparedStatement.setBoolean(1,train.getAvailable());
+			preparedStatement.setString(2,train.getDescription());
+			preparedStatement.setInt(3,train.getId());
 			int result = preparedStatement.executeUpdate();
 			System.out.println("Number of records affected :: " + result);
+			return train;
 		}catch(SQLException e) {
 			System.out.println("error " + e);
 		}
 		return null;
 	}
-	public ArrayList<Train> getAllTrain() {
-		ArrayList<Train> train = new ArrayList<>();
+	public ArrayList<Train> getAll() {
+		ArrayList<Train> trains = new ArrayList<>();
 		try {
 			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TRAIN);
+			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TRAINS);
 			ResultSet result = preparedStatement.executeQuery();
 
 			while (result.next()) {
-				Train trains = new Train();
-				trains.setId(result.getInt("id"));
-				trains.setAvailable(result.getBoolean("available"));
-				trains.setDescription(result.getString("description"));
-				train.add(trains);
+				Train train = new Train();
+				train.setId(result.getInt("train_id"));
+				train.setAvailable(result.getBoolean("available"));
+				train.setDescription(result.getString("description"));
+				trains.add(train);
 			} 
-			return train;
+			return trains;
 		}catch (SQLException e) {
 			System.out.println("error " + e);
 			return null;

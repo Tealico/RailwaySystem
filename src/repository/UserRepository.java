@@ -28,8 +28,7 @@ public class UserRepository {
 			+ "order by id";
 	private final String GET_USER_BY_ID = "select * From users "
 			+ "join usertype on usertype.id=users.usertype_id "
-			+ "where user_id=? "
-			+ "order by users.user_id";
+			+ "where user_id=? ";
 	private final String UPDATE_USER_BY_USER_TYPE="update users "
 			+ "set usertype_id=? "
 			+ "where user_id=?";
