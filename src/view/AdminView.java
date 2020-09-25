@@ -34,9 +34,9 @@ public class AdminView {
 		else if(number == 2) {
 			new TrainView(this).trainMenu();
 		}
-//		else if(number == 3) {
-//			new Location().locationMenu();
-//		}
+		else if(number == 3) {
+			new LocationView(this).locationMenu();
+		}
 		else if(number == 4) {
 			new UsersView(this).usersMenu();
 		}

@@ -10,28 +10,24 @@ import model.Location;
 import util.ConnectionManager;
 
 public class LocationRepository {
-	public final String ADD_LOCATION="INSERT INTO location(name,startlocation,endlocation,available,trip_id) VALUES(?,?,?,?,?)";
+	public final String ADD_LOCATION="INSERT INTO location(name,available) VALUES(?,?)";
 	public final String DELETE_LOCATION="delete from location where location.location_id=?";
 	public final String GET_LOCATION_BY_ID="select * from location "
-			+ "join trip on location.trip_id=trip.trip_id"
-			+ "where trip.trip_id=?"
-			+ "order by trip.trip_id";
-	public final String UPDATE_LOCATION="update location"
-			+ "set name=?,set firstname=?,set endlocation=?,set available=?";
-	public final String GET_ALL_LOCATION="select startlocation,endlocation,available"
-			+ "from location";
+			+ "where location.location_id=?";
+	public final String UPDATE_LOCATION="update location "
+			+ "set name=?,available=? "
+			+ "where location.location_id=?";
+	public final String GET_ALL_LOCATION="select * "
+			+ "from location "
+			+ "order by location.location_id";
 	
-	public void addLocation(Location location,int tripId) {
+	public void addLocation(Location location) {
 		try{
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(ADD_LOCATION);
 			
 			preparedStatement.setString(1,location.getName());
-			preparedStatement.setString(2,location.getStartlocation());
-			preparedStatement.setString(3,location.getEndlocation());
-			preparedStatement.setString(4,location.getStartlocation());
-			preparedStatement.setBoolean(5,location.getAvailable());
-			preparedStatement.setInt(6,tripId);
+			preparedStatement.setBoolean(2,location.getAvailable());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
@@ -57,9 +53,8 @@ public class LocationRepository {
 			
 			if(result.next()) {
 				Location location = new Location();
+				location.setId(result.getInt("location_id"));
 				location.setName(result.getString("name"));
-				location.setStartlocation(result.getString("startlocation"));
-				location.setEndlocation(result.getString("endlocation"));
 				location.setAvailable(result.getBoolean("available"));
 				return location;
 			}else {
@@ -70,14 +65,13 @@ public class LocationRepository {
 		}
 		return null;
 	}
-	public Location updateLocation(String name,String startLocation,String endLocation,Boolean available) {
+	public Location updateLocation(Location location) {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION);
-			preparedStatement.setString(1,name);
-			preparedStatement.setString(2,startLocation);
-			preparedStatement.setString(3,endLocation);
-			preparedStatement.setBoolean(4,available);
+			preparedStatement.setString(1,location.getName());
+			preparedStatement.setBoolean(2,location.getAvailable());
+			preparedStatement.setInt(3,location.getId());
 			int result = preparedStatement.executeUpdate();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
@@ -86,22 +80,20 @@ public class LocationRepository {
 		return null;
 	}
 	public ArrayList<Location> getAllLocation() {
-		ArrayList<Location> location = new ArrayList<>();
+		ArrayList<Location> locations = new ArrayList<>();
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_LOCATION);
 			ResultSet result = preparedStatement.executeQuery();
 
 			while (result.next()) {
-				Location locations = new Location();
-				locations.setId(result.getInt("id"));
-				locations.setName(result.getString("name"));
-				locations.setStartlocation(result.getString("startlocation"));
-				locations.setEndlocation(result.getString("endlocation"));
-				locations.setAvailable(result.getBoolean("available"));
-				location.add(locations);
+				Location location = new Location();
+				location.setId(result.getInt("location_id"));
+				location.setName(result.getString("name"));
+				location.setAvailable(result.getBoolean("available"));
+				locations.add(location);
 			} 
-			return location;
+			return locations;
 		}catch (SQLException e) {
 			System.out.println("error " + e);
 			return null;
