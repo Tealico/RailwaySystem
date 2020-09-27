@@ -1,7 +1,8 @@
 package model;
 
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Trip {
 	private int id;
@@ -10,11 +11,11 @@ public class Trip {
 	private String name;
 	private String description;
 	private int price;
-	private Date date;
+	private LocalDateTime date;
 	private ArrayList<Reservation> reservations;
 	private Train train;
 
-	public Trip(int id, Location startLocation, Location endLocation, String name, String description,int price,Date date,
+	public Trip(int id, Location startLocation, Location endLocation, String name, String description,int price,LocalDateTime date,
 			ArrayList<Reservation> reservations, Train train) {
 		this.id = id;
 		this.startLocation = startLocation;
@@ -84,11 +85,11 @@ public class Trip {
 		this.price = price;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
