@@ -6,13 +6,15 @@ public class Train {
 	private int id;
 	private Boolean available;
 	private String description;
+	private String headcode;
 	private ArrayList<Trip> trips;
 	private ArrayList<Wagon> wagons;
 
-	public Train(int id, Boolean available, String description, ArrayList<Trip> trips, ArrayList<Wagon> wagons) {
+	public Train(int id, Boolean available, String description,String headcode, ArrayList<Trip> trips, ArrayList<Wagon> wagons) {
 		this.id = id;
 		this.available = available;
 		this.description = description;
+		this.headcode=headcode;
 		this.trips = trips;
 		this.wagons = wagons;
 	}
@@ -21,6 +23,7 @@ public class Train {
 		this.id = 0;
 		this.available = false;
 		this.description = "";
+		this.headcode="";
 		this.trips = null;
 		this.wagons = null;
 	}
@@ -48,6 +51,14 @@ public class Train {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public String getHeadcode() {
+		return this.headcode;
+	}
+
+	public void setHeadcode(String headcode) {
+		this.headcode = headcode;
+	}
 
 	public ArrayList<Trip> getTrip() {
 		return trips;
@@ -67,7 +78,7 @@ public class Train {
 
 	@Override
 	public String toString() {
-		return "Train [id=" + id + ", available=" + available + ", description=" + description + ", trips=" + trips
-				+ ", wagons=" + wagons + "]";
+		return "Train [id=" + this.id + ", available=" + this.available + ", description=" + this.description
+				+ ", headcode=" + this.headcode + ", trips=" + this.trips + ", wagons=" + this.wagons + "]";
 	}
 }

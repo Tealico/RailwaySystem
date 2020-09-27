@@ -7,8 +7,7 @@ public class Wagon {
 	private int number;
 	private String description;
 	private ArrayList<Seat> seats;
-	
-	public Wagon(int id, int number,String description, ArrayList<Seat> seats) {
+	public Wagon(int id, int number, String description, ArrayList<Seat> seats) {
 		this.id = id;
 		this.number = number;
 		this.description = description;
@@ -21,31 +20,32 @@ public class Wagon {
 		this.seats = null;
 	}
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
 	public int getNumber() {
-		return number;
+		return this.number;
 	}
 	public void setNumber(int number) {
 		this.number = number;
 	}
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public ArrayList<Seat> getSeats() {
-		return seats;
+		return this.seats;
 	}
 	public void setSeats(ArrayList<Seat> seats) {
 		this.seats = seats;
 	}
 	@Override
 	public String toString() {
-		return "Wagon [id=" + id + ", number=" + number + ", description=" + description + ", seats=" + seats + "]";
+		return "Wagon [id=" + this.id + ", number=" + this.number + ", description="
+				+ this.description + ", seats=" + this.seats + "]";
 	}
 }

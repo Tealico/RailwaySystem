@@ -24,6 +24,8 @@ public class AdminView {
 		System.out.println("---------------------");
 		System.out.println("5 | Trip");
 		System.out.println("---------------------");
+		System.out.println("6 | Wagons");
+		System.out.println("---------------------");
 		
 		Scanner in=new Scanner(System.in);
 		System.out.print("Put the number: ");
@@ -43,9 +45,12 @@ public class AdminView {
 		else if(number == 5) {
 			new TripView(this).tripMenu(user);
 		}
-//		else if(number > 5 || number < 1 ) {
-//			System.out.println("Wrong menu.");
-//			this.adminMenu();
-//		}
+		else if(number == 6) {
+			new WagonView(this).wagonMenu();
+		}
+		else if(number > 5 || number < 1 ) {
+			System.out.println("Wrong menu.");
+			this.adminMenu();
+		}
 	}
 }

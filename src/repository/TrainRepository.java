@@ -10,7 +10,7 @@ import model.Train;
 import util.ConnectionManager;
 
 public class TrainRepository {
-	public final String ADD_TRAIN="INSERT INTO train(available,description) VALUES(?,?)";
+	public final String ADD_TRAIN="INSERT INTO train(available,description,headcode) VALUES(?,?,?)";
 	public final String DELETE_TRAIN="delete from train where train.train_id=?";
 	public final String UPDATE_TRAIN="update train "
 			+ "set available=?,description=? "
@@ -27,6 +27,7 @@ public class TrainRepository {
 			
 			preparedStatement.setBoolean(1,train.getAvailable());
 			preparedStatement.setString(2,train.getDescription());
+			preparedStatement.setString(3,train.getHeadcode());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
@@ -55,6 +56,7 @@ public class TrainRepository {
 				train.setId(result.getInt("train_id"));
 				train.setAvailable(result.getBoolean("available"));
 				train.setDescription(result.getString("description"));
+				train.setHeadcode(result.getString("headcode"));
 				return train;
 			}else {
 				return null;
@@ -92,6 +94,7 @@ public class TrainRepository {
 				train.setId(result.getInt("train_id"));
 				train.setAvailable(result.getBoolean("available"));
 				train.setDescription(result.getString("description"));
+				train.setHeadcode(result.getString("headcode"));
 				trains.add(train);
 			} 
 			return trains;

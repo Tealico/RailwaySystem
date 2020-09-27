@@ -41,12 +41,12 @@ public class TrainView {
 			Scanner in=new Scanner(System.in);
 			System.out.println("List Train");	
 			System.out.println("----------------------------------------------");
-			System.out.println("ID | Available | Description ");
+			System.out.println("ID | Available | Description | Headcode ");
 			System.out.println("----------------------------------------------");
 			ArrayList<Train> trains = trainService.getAll();
 			
 			for(Train t:trains) {
-				System.out.println(t.getId() + "   |   " + t.getAvailable() + "    |    " + t.getDescription());
+				System.out.println(t.getId() + "   |   " + t.getAvailable() + "    |    " + t.getDescription() + "    |    " + t.getHeadcode());
 			}
 			System.out.println("0   |   Home");
 			System.out.print("Put the number: ");
@@ -89,12 +89,16 @@ public class TrainView {
 			}
 		}
 		private String buildView(Train train) {
-			String str = "ID            |  " + train.getId()           + "\n"
-					   + "------------------------------------------"  + "\n" 
-					   + "Available     |  " + train.getAvailable()    + "\n" 
-					   + "------------------------------------------"  + "\n" 
-					   + "Description   |  " + train.getDescription()  + "\n"
-					   +"-------------------------------------------"  + "\n";
+			String str = "ID            |  " + train.getId()                 + "\n"
+					   + "------------------------------------------"        + "\n" 
+					   + "Available     |  " + train.getAvailable()          + "\n" 
+					   + "------------------------------------------"  		 + "\n" 
+					   + "Description   |  " + train.getDescription()        + "\n"
+					   +"-------------------------------------------"        + "\n"
+					   + "Headcode      |  " + train.getHeadcode()           + "\n"
+					   +"-------------------------------------------"        + "\n"
+					   + "Wagon NO.     |  " + train.getWagons().size()      + "\n"
+					   +"-------------------------------------------"        + "\n";
 			return str;
 		}
 		public void updateTrain(Train train) {
@@ -129,6 +133,8 @@ public class TrainView {
 		}
 		public void addTrain() {
 			Scanner in=new Scanner(System.in);
+			System.out.println("Put the train headcode: ");
+			String headcode =in.nextLine();
 			System.out.println("Put the train description: ");
 			String description =in.nextLine();
 			System.out.print("Is available? [y/n]: ");
@@ -140,6 +146,7 @@ public class TrainView {
 				available=false;
 			}
 			Train train = new Train();
+			train.setHeadcode(headcode);
 			train.setDescription(description);
 			train.setAvailable(available);
 			trainService.addTrain(train);

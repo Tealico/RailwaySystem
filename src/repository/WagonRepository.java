@@ -10,29 +10,38 @@ import model.Wagon;
 import util.ConnectionManager;
 
 public class WagonRepository {
-	public final String ADD_WAGON="INSERT INTO wagon(number,description,train_id) VALUES (?,?,?)";
+	public final String ADD_WAGON="INSERT INTO wagon(number,description,train_id) VALUES (?,?,?) returning wagon_id";
 	public final String DELETE_WAGON="delete from wagon where wagon.wagon_id=?";
-	public final String GET_WAGON_BY_ID="select * from wagon"
-			+ "join train on wagon.train_id=train.train_id"
+	public final String GET_WAGON_BY_ID="select * from wagon "
+			+ "join train on wagon.train_id=train.train_id "
 			+ " where wagon_id=?";
-	public final String UPDATE_WAGON="update wagon"
-			+ "set number=?,set description=?,set wagon_id=?";
-	public final String GET_ALL_WAGON="select * from wagon"
-			+ "join train on wagon.train_id=train.train_id"
+	public final String UPDATE_WAGON="update wagon "
+			+ "set number=?,description=?";
+	public final String GET_ALL_WAGONS="select * from wagon "
 			+ "order by wagon.wagon_id";
+	public final String GET_ALL_WAGONS_BY_TRAIN_ID="select * "
+			+ "From wagon "
+			+ "where wagon.train_id=?";
 	
-	public void addWagon(Wagon wagon,int trainId) {
+	private Connection connection = ConnectionManager.getConnection();
+	
+	public int addWagon(Wagon wagon,int trainId) {
 		try{
-			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(ADD_WAGON);
 			
 			preparedStatement.setInt(1,wagon.getNumber());
 			preparedStatement.setString(2,wagon.getDescription());
 			preparedStatement.setInt(3,trainId);
-			preparedStatement.executeUpdate();
+			ResultSet result=preparedStatement.executeQuery();
+			if(result.next()) {
+				int id = result.getInt("wagon_id");
+				System.out.println(id);
+				return id;
+			}
 		} catch (SQLException e) {
 			System.out.println("error " + e);
 		}
+		return 0;
 	}
 	public void deleteWagon(int wagonId) {
 		try {
@@ -51,11 +60,11 @@ public class WagonRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_WAGON_BY_ID);
 			preparedStatement.setInt(1, wagonId);
 			ResultSet result = preparedStatement.executeQuery();
-			
 			if(result.next()) {
 				Wagon wagon = new Wagon();
 				wagon.setNumber(result.getInt("number"));
 				wagon.setDescription(result.getString("description"));
+				wagon.setId(result.getInt("wagon_id"));
 				return wagon;
 			}else {
 				return null;
@@ -65,13 +74,12 @@ public class WagonRepository {
 		}
 		return null;
 	}
-	public Wagon updateWagon(int number,String description,int trainId) {
+	public Wagon updateWagon(Wagon wagon) {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_WAGON);
-			preparedStatement.setInt(1,number);
-			preparedStatement.setString(2,description);
-			preparedStatement.setInt(3,trainId);
+			preparedStatement.setInt(1,wagon.getNumber());
+			preparedStatement.setString(2,wagon.getDescription());
 			int result = preparedStatement.executeUpdate();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
@@ -79,21 +87,42 @@ public class WagonRepository {
 		}
 		return null;
 	}
-	public ArrayList<Wagon> getAllWagon() {
-		ArrayList<Wagon> wagon = new ArrayList<>();
+	public ArrayList<Wagon> getAllWagons() {
+		ArrayList<Wagon> wagons = new ArrayList<>();
 		try {
 			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_WAGON);
+			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_WAGONS);
 			ResultSet result = preparedStatement.executeQuery();
 
 			while (result.next()) {
-				Wagon wagons = new Wagon();
-				wagons.setId(result.getInt("id"));
-				wagons.setNumber(result.getInt("number"));
-				wagons.setDescription(result.getString("description"));
-				wagon.add(wagons);
+				Wagon wagon = new Wagon();
+				wagon.setId(result.getInt("wagon_id"));
+				wagon.setNumber(result.getInt("number"));
+				wagon.setDescription(result.getString("description"));
+				wagons.add(wagon);
 			} 
-			return wagon;
+			return wagons;
+		}catch (SQLException e) {
+			System.out.println("error " + e);
+			return null;
+		}
+	}
+	public ArrayList<Wagon> getAllWagonsByTrainId(int trainId) {
+		ArrayList<Wagon> wagons = new ArrayList<>();
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_WAGONS_BY_TRAIN_ID);
+			preparedStatement.setInt(1, trainId);
+			ResultSet result = preparedStatement.executeQuery();
+
+			while (result.next()) {
+				Wagon wagon = new Wagon();
+				wagon.setId(result.getInt("wagon_id"));
+				wagon.setNumber(result.getInt("number"));
+				wagon.setDescription(result.getString("description"));
+				wagons.add(wagon);
+			} 
+			return wagons;
 		}catch (SQLException e) {
 			System.out.println("error " + e);
 			return null;

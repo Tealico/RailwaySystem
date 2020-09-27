@@ -9,18 +9,20 @@ public class Trip {
 	private Location endLocation;
 	private String name;
 	private String description;
-	private ArrayList<Date> availableDates;
+	private int price;
+	private Date date;
 	private ArrayList<Reservation> reservations;
 	private Train train;
 
-	public Trip(int id, Location startLocation, Location endLocation, String name, String description,
-			ArrayList<Date> availableDates, ArrayList<Reservation> reservations, Train train) {
+	public Trip(int id, Location startLocation, Location endLocation, String name, String description,int price,Date date,
+			ArrayList<Reservation> reservations, Train train) {
 		this.id = id;
 		this.startLocation = startLocation;
 		this.endLocation = endLocation;
 		this.name = name;
 		this.description = description;
-		this.availableDates = availableDates;
+		this.date=date;
+		this.price=price;
 		this.reservations = reservations;
 		this.train = train;
 	}
@@ -31,7 +33,6 @@ public class Trip {
 		this.endLocation = new Location();
 		this.name = "";
 		this.description = "";
-		this.availableDates = null;
 		this.reservations = null;
 		this.train = new Train();
 	}
@@ -75,13 +76,20 @@ public class Trip {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public ArrayList<Date> getAvailableDates() {
-		return availableDates;
+	public int getPrice() {
+		return this.price;
 	}
 
-	public void setAvailableDates(ArrayList<Date> availableDates) {
-		this.availableDates = availableDates;
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Date getDate() {
+		return this.date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public ArrayList<Reservation> getReservations() {
@@ -102,8 +110,8 @@ public class Trip {
 
 	@Override
 	public String toString() {
-		return "Trip [id=" + id + ", startLocation=" + startLocation + ", endLocation=" + endLocation + ", name=" + name
-				+ ", description=" + description + ", availableDates=" + availableDates + ", reservations="
-				+ reservations + ", train=" + train + "]";
+		return "Trip [id=" + this.id + ", startLocation=" + this.startLocation + ", endLocation=" + this.endLocation
+				+ ", name=" + this.name + ", description=" + this.description + ", price=" + this.price + ", date="
+				+ this.date + ", reservations=" + this.reservations + ", train=" + this.train + "]";
 	}
 }
