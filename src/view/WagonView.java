@@ -41,6 +41,10 @@ public class WagonView {
 		else if(number == 3) {
 			home.adminMenu();
 		}
+		else {
+			System.out.println("Invalid number. ");
+			this.wagonMenu();
+		}
 	}
 	public void listWagons() {
 		Scanner in=new Scanner(System.in);
@@ -61,7 +65,12 @@ public class WagonView {
 			home.adminMenu();
 		}
 		else {
-			this.wagonDetails(number);
+			try {
+				this.wagonDetails(number);
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				this.listWagons();;
+			}
 		}
 	}
 	
@@ -89,6 +98,10 @@ public class WagonView {
 			}
 			else if(number == 3) {
 				home.adminMenu();
+			}
+			else {
+				System.out.println("Invalid number. ");
+				this.wagonDetails(wagonId);
 			}
 		}catch(CustomException c) {
 			System.out.println(c.getMessage());

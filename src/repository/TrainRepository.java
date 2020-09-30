@@ -29,6 +29,7 @@ public class TrainRepository {
 			preparedStatement.setString(2,train.getDescription());
 			preparedStatement.setString(3,train.getHeadcode());
 			preparedStatement.executeUpdate();
+			connection.close();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
 		}
@@ -39,6 +40,7 @@ public class TrainRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRAIN); 
 			preparedStatement.setInt(1, trainId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch (SQLException e) {
 			System.out.println("error " + e);
@@ -50,6 +52,7 @@ public class TrainRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_TRAIN_BY_ID);
 			preparedStatement.setInt(1, trainId);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 			
 			if(result.next()) {
 				Train train= new Train();
@@ -75,6 +78,7 @@ public class TrainRepository {
 			preparedStatement.setString(2,train.getDescription());
 			preparedStatement.setInt(3,train.getId());
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 			return train;
 		}catch(SQLException e) {
@@ -88,6 +92,7 @@ public class TrainRepository {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TRAINS);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 
 			while (result.next()) {
 				Train train = new Train();

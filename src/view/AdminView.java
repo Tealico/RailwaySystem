@@ -14,42 +14,37 @@ public class AdminView {
 	public void adminMenu() {
 		System.out.println("Admin");
 		System.out.println("---------------------");
-		System.out.println("1 | Profile");
+		System.out.println("1 | Trains");
 		System.out.println("---------------------");
-		System.out.println("2 | Trains");
+		System.out.println("2 | Location");
 		System.out.println("---------------------");
-		System.out.println("3 | Location");
+		System.out.println("3 | Users");
 		System.out.println("---------------------");
-		System.out.println("4 | Users");
+		System.out.println("4 | Trip");
 		System.out.println("---------------------");
-		System.out.println("5 | Trip");
-		System.out.println("---------------------");
-		System.out.println("6 | Wagons");
+		System.out.println("5 | Wagons");
 		System.out.println("---------------------");
 		
 		Scanner in=new Scanner(System.in);
 		System.out.print("Put the number: ");
 		int number = in.nextInt();
 		if(number == 1) {
-//			new Profile().profileMenu();
-		}
-		else if(number == 2) {
 			new TrainView(this).trainMenu();
 		}
-		else if(number == 3) {
+		else if(number == 2) {
 			new LocationView(this).locationMenu();
 		}
-		else if(number == 4) {
+		else if(number == 3) {
 			new UsersView(this).usersMenu();
 		}
-		else if(number == 5) {
+		else if(number == 4) {
 			new TripView(this).tripMenu(user);
 		}
-		else if(number == 6) {
+		else if(number == 5) {
 			new WagonView(this).wagonMenu();
 		}
-		else if(number > 5 || number < 1 ) {
-			System.out.println("Wrong menu.");
+		else {
+			System.out.println("Invalid number.");
 			this.adminMenu();
 		}
 	}

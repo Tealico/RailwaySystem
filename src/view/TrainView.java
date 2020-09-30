@@ -36,6 +36,10 @@ public class TrainView {
 		else if(number == 3) {
 			home.adminMenu();
 		}
+		else {
+			System.out.println("Invalid number. ");
+			this.trainMenu();
+		}
 	}
 		public void trainList() {
 			Scanner in=new Scanner(System.in);
@@ -55,7 +59,12 @@ public class TrainView {
 				home.adminMenu();
 			}
 			else {
-				this.trainDetails(number);
+				try {
+					this.trainDetails(number);
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+					this.trainList();
+				}
 			}
 		}
 		public void trainDetails(int trainId) {
@@ -82,6 +91,10 @@ public class TrainView {
 				}
 				else if(number == 3) {
 					home.adminMenu();
+				}
+				else {
+					System.out.println("Invalid number. ");
+					this.trainDetails(trainId);
 				}
 			}catch(CustomException c) {
 				System.out.println(c.getMessage());
@@ -139,12 +152,8 @@ public class TrainView {
 			String description =in.nextLine();
 			System.out.print("Is available? [y/n]: ");
 			String answer=in.next();
-			boolean available;
-			if(answer.equalsIgnoreCase("y")) {
-				available=true;
-			}else {
-				available=false;
-			}
+			boolean available=answer.equalsIgnoreCase("y");
+			
 			Train train = new Train();
 			train.setHeadcode(headcode);
 			train.setDescription(description);

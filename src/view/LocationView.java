@@ -35,6 +35,10 @@ public class LocationView {
 		else if(number == 3) {
 			home.adminMenu();
 		}
+		else {
+			System.out.println("Invalid number. ");
+			this.locationMenu();
+		}
 	}
 	public void locationList() {
 		Scanner in=new Scanner(System.in);
@@ -86,6 +90,10 @@ public class LocationView {
 			}
 			else if(number == 3) {
 				home.adminMenu();
+			}
+			else {
+				System.out.println("Invalid number. ");
+				this.locationDetails(locationId);
 			}
 		}catch(CustomException c) {
 			System.out.println(c.getMessage());

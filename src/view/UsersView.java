@@ -32,6 +32,10 @@ public class UsersView {
 		else if(number == 2) {
 			home.adminMenu();
 		}
+		else {
+			System.out.println("Invalid number. ");
+			this.usersMenu();
+		}
 	}
 	
 	public void usersList() {
@@ -88,6 +92,10 @@ public class UsersView {
 				this.usersList();
 			}else if(number==3) {
 				home.adminMenu();
+			}
+			else {
+				System.out.println("Invalid number. ");
+				this.userDetails(id);
 			}
 		}catch(CustomException e) {
 			System.out.println(e.getMessage());

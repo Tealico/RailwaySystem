@@ -29,6 +29,7 @@ public class LocationRepository {
 			preparedStatement.setString(1,location.getName());
 			preparedStatement.setBoolean(2,location.getAvailable());
 			preparedStatement.executeUpdate();
+			connection.close();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
 		}
@@ -39,6 +40,7 @@ public class LocationRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LOCATION); 
 			preparedStatement.setInt(1, locationId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch (SQLException e) {
 			System.out.println("error " + e);
@@ -50,6 +52,7 @@ public class LocationRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_BY_ID);
 			preparedStatement.setInt(1, locationId);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 			
 			if(result.next()) {
 				Location location = new Location();
@@ -73,6 +76,7 @@ public class LocationRepository {
 			preparedStatement.setBoolean(2,location.getAvailable());
 			preparedStatement.setInt(3,location.getId());
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
 			System.out.println("error " + e);
@@ -85,6 +89,7 @@ public class LocationRepository {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_LOCATION);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 
 			while (result.next()) {
 				Location location = new Location();

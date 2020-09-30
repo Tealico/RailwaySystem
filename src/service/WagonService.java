@@ -15,7 +15,10 @@ public class WagonService {
 		ArrayList<Wagon> wagons=wagonRepository.getAllWagons();
 		return wagons;
 	}
-	
+	public ArrayList<Wagon> getAllWagonsByTrainId(int trainId){
+		ArrayList<Wagon> wagons=wagonRepository.getAllWagonsByTrainId(trainId);
+		return wagons;
+	}
 	public Wagon getWagonById(int wagonId) {
 		Wagon wagon= wagonRepository.getWagonById(wagonId);
 		return wagon;

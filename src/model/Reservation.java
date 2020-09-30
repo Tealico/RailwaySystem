@@ -1,15 +1,18 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Reservation {
 	private int id;
-	private String date;
+	private LocalDateTime date;
 	private int totalprice;
 	private Seat seat;
 	private Train train;
 	private Wagon wagon;
 	private Trip trip;
+	private User user;
 	
-	public Reservation(int id, String date, int totalprice, Seat seat ,Train train,Wagon wagon,Trip trip ) {
+	public Reservation(int id, LocalDateTime date, int totalprice, Seat seat ,Train train,Wagon wagon,Trip trip,User user) {
 		this.id = id;
 		this.date = date;
 		this.totalprice = totalprice;
@@ -17,15 +20,23 @@ public class Reservation {
 		this.train=train;
 		this.wagon=wagon;
 		this.trip=trip;
+		this.user=user;
 	}
 	public Reservation() {
 		this.id = 0;
-		this.date = "";
+		this.date = null;
 		this.totalprice = 0;
 		this.seat = new Seat();
 		this.train=new Train();
 		this.wagon=new Wagon();
 		this.trip=new Trip();
+		this.user=new User();
+	}
+	public User getUser() {
+		return this.user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public int getId() {
 		return this.id;
@@ -33,10 +44,11 @@ public class Reservation {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return this.date;
 	}
-	public void setDate(String date) {
+
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public int getTotalprice() {
@@ -72,6 +84,7 @@ public class Reservation {
 	@Override
 	public String toString() {
 		return "Reservation [id=" + this.id + ", date=" + this.date + ", totalprice=" + this.totalprice + ", seat="
-				+ this.seat + ", train=" + this.train + ", wagon=" + this.wagon + ", trip=" + this.trip + "]";
+				+ this.seat + ", train=" + this.train + ", wagon=" + this.wagon + ", trip=" + this.trip + ", user="
+				+ this.user + "]";
 	}
 }

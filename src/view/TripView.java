@@ -1,10 +1,9 @@
 package view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 import exception.CustomException;
@@ -57,6 +56,9 @@ public class TripView {
 			else if(number == 3) {
 				adminHome.adminMenu();
 			}
+			else {
+				this.tripMenu(user);
+			}
 		}else if (user.getType() == UserType.CUSTOMER) {
 			System.out.println("2 | Home");
 			System.out.println("-------------------");
@@ -67,6 +69,9 @@ public class TripView {
 			}
 			else if(number == 2) {
 				customerHome.userMenu();
+			}
+			else {
+				this.tripMenu(user);
 			}
 		}
 	}
@@ -94,7 +99,14 @@ public class TripView {
 			}
 		}
 		else {
-			this.tripDetails(user,number);
+			for(Trip t:trips) {
+				if(t.getId() == number) {
+					this.tripDetails(user, number);
+					return;
+				}
+			}
+			System.out.println("Select the correct number!");
+			this.listTrips(user);
 		}
 	}
 	
@@ -110,7 +122,9 @@ public class TripView {
 				System.out.println("-------------------");
 				System.out.println("2 | Delete");
 				System.out.println("-------------------");
-				System.out.println("3 | Home");
+				System.out.println("3 | List Reservations");
+				System.out.println("-------------------");
+				System.out.println("4 | Home");
 				System.out.println("-------------------");
 				System.out.println("Put the number: ");
 				int number=in.nextInt();
@@ -122,7 +136,14 @@ public class TripView {
 					this.listTrips(user);
 				}
 				else if(number == 3) {
+					new ReservationView(adminHome).listTripReservations(tripId, user);
+				}
+				else if(number == 4) {
 					adminHome.adminMenu();
+				}
+				else {
+					System.out.println("Invalid number! ");
+					this.tripDetails(user, tripId);
 				}
 			}
 			else if(user.getType() == UserType.CUSTOMER) {
@@ -133,10 +154,14 @@ public class TripView {
 				System.out.println("Put the number: ");
 				int number=in.nextInt();
 				if(number == 1) {
-					// @TO-DO: change view, go to create reservation ... 
+					new ReservationView(customerHome).addReservation(tripId,user.getId());
 				}
 				else if(number == 2) {
 					customerHome.userMenu();
+				}
+				else {
+					System.out.println("Invalid number! ");
+					this.tripDetails(user, tripId);
 				}
 			}
 		}catch(CustomException c) {
@@ -185,16 +210,11 @@ public class TripView {
 		System.out.print("Do you want to change trip date? [y/n]: ");
 		String answer3 = in.next();
 		if(answer3.equalsIgnoreCase("y")) {
-			System.out.print("Put new date (dd-MM-yyyy hh:mm): ");
+			System.out.print("Put new date (dd-MM-yyyy HH:mm): ");
 			String dateString=in.nextLine();
-			Date date=null;
-			try {
-				date = new SimpleDateFormat("dd-MM-yyyy hh:mm").parse(dateString);
-			} catch (ParseException e) {
-				System.out.println(e.getMessage());
-				this.updateTrip(trip, user);
-			}
-//			trip.setDate(date);		
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+			LocalDateTime date = LocalDateTime.parse(dateString,formatter);
+			trip.setDate(date);
 		}
 		System.out.print("Do you want to change price? [y/n]: ");
 		String answer4 = in.next();
@@ -224,10 +244,17 @@ public class TripView {
 		String name=in.nextLine();
 		System.out.print("Put the trip description: ");
 		String description=in.nextLine();
-		System.out.print("Put the trip date (dd-MM-yyyy hh:mm): ");
-		String dateString=in.nextLine();
-		LocalDate date;
-		date = LocalDate.parse(dateString);
+		LocalDateTime date = null;
+		try {
+			System.out.print("Put the trip date (dd-MM-yyyy HH:mm): ");
+			String dateString=in.nextLine();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+			date = LocalDateTime.parse(dateString, formatter);
+		}catch(DateTimeParseException e) {
+			System.out.println(e.getMessage());
+			this.addTrip(user);
+			return;
+		}
 		System.out.print("Put the price: ");
 		int price=in.nextInt();
 		ArrayList<Location> locations = locationService.getAllLocation();
@@ -236,14 +263,47 @@ public class TripView {
 		}
 		System.out.print("Select start location from the list: ");
 		int startlocation=in.nextInt();
+		boolean valid1=false;
+		for(Location l:locations) {
+			if(l.getId() == startlocation) {
+				valid1=true;
+			}
+		}
+		if(valid1==false) {
+			System.out.println("Invalid startlocation!");
+			this.addTrip(user);
+			return;
+		}
 		System.out.print("Select end location from the list: ");
 		int endlocation=in.nextInt();
+		boolean valid2=false;
+		for(Location l:locations) {
+			if(l.getId() == endlocation) {
+				valid2=true;
+			}
+		}
+		if(valid2==false) {
+			System.out.println("Invalid endlocation!");
+			this.addTrip(user);
+			return;
+		}
 		ArrayList<Train> trains=trainService.getAll();
 		for(Train t:trains) {
 			System.out.println(t.getId()+"    |    "+t.getAvailable()+"    |   "+t.getHeadcode());
 		}
 		System.out.print("Select train from the list: ");
 		int trainId=in.nextInt();
+		boolean valid3=false;
+		for(Train t:trains) {
+			if(t.getId() == trainId) {
+				valid3=true;
+			}
+		}
+		if(valid3==false) {
+			System.out.println("Invalid trainId!");
+			this.addTrip(user);
+			return;
+		}
 		Trip trip =new Trip();
 		trip.setName(name);
 		trip.setDescription(description);
@@ -253,7 +313,6 @@ public class TripView {
 		this.listTrips(user);
 	}
 }
-
 
 
 

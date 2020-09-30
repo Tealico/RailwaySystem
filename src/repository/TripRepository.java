@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import model.Location;
@@ -29,29 +29,33 @@ public class TripRepository {
 			+ "set name=?, description=?,date=?,price=?,trainId=?";
 	public final String GET_ALL_TRIP="select * from trip "
 			+ "order by trip.trip_id";
-	private Connection connection=ConnectionManager.getConnection();
+	
 	
 	public void addTrip(Trip trip,int startlocation,int endlocation,int trainId) {
 		try{
+			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(ADD_TRIP);
 			
 			preparedStatement.setString(1,trip.getName());
 			preparedStatement.setString(2,trip.getDescription());
 			preparedStatement.setInt(3,trip.getPrice());
-			preparedStatement.setObject(4, trip.getDate());
+			preparedStatement.setTimestamp(4, Timestamp.valueOf(trip.getDate()));
 			preparedStatement.setInt(5,startlocation);
 			preparedStatement.setInt(6,endlocation);
 			preparedStatement.setInt(7, trainId);
 			preparedStatement.executeUpdate();
+			connection.close();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
 		}
 	}
 	public void deleteTrip(int tripId) {
 		try {
+			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRIP); 
 			preparedStatement.setInt(1, tripId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch (SQLException e) {
 			System.out.println("error " + e);
@@ -59,16 +63,18 @@ public class TripRepository {
 	}
 	public Trip getTripById(int tripId) {
 		try {
+			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_TRIP_BY_ID);
 			preparedStatement.setInt(1, tripId);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 			
 			if(result.next()) {
 				Trip trip= new Trip();
 				trip.setName(result.getString("name"));
 				trip.setDescription(result.getString("description"));
 				trip.setPrice(result.getInt("price"));
-				trip.setDate(result.getObject("date", LocalDate.class));
+				trip.setDate(result.getTimestamp("date").toLocalDateTime());
 				trip.setId(result.getInt("trip_id"));
 				Train train = new Train();
 				train.setId(result.getInt("train_id"));
@@ -98,13 +104,15 @@ public class TripRepository {
 	
 	public Trip updateTrip(Trip trip,int trainId) {
 		try {
+			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TRIP);
 			preparedStatement.setString(1,trip.getName());
 			preparedStatement.setString(2,trip.getDescription());
 			preparedStatement.setInt(3,trip.getPrice());
-			preparedStatement.setObject(4, trip.getDate());
+			preparedStatement.setTimestamp(4, Timestamp.valueOf(trip.getDate()));
 			preparedStatement.setInt(5, trainId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
 			System.out.println("error " + e);
@@ -114,8 +122,10 @@ public class TripRepository {
 	public ArrayList<Trip> getAllTrips() {
 		ArrayList<Trip> trips = new ArrayList<>();
 		try {
+			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TRIP);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 
 			while (result.next()) {
 				Trip trip = new Trip();

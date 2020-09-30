@@ -23,16 +23,16 @@ public class WagonRepository {
 			+ "From wagon "
 			+ "where wagon.train_id=?";
 	
-	private Connection connection = ConnectionManager.getConnection();
-	
 	public int addWagon(Wagon wagon,int trainId) {
 		try{
+			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(ADD_WAGON);
 			
 			preparedStatement.setInt(1,wagon.getNumber());
 			preparedStatement.setString(2,wagon.getDescription());
 			preparedStatement.setInt(3,trainId);
 			ResultSet result=preparedStatement.executeQuery();
+			connection.close();
 			if(result.next()) {
 				int id = result.getInt("wagon_id");
 				System.out.println(id);
@@ -49,6 +49,7 @@ public class WagonRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_WAGON); 
 			preparedStatement.setInt(1, wagonId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch (SQLException e) {
 			System.out.println("error " + e);
@@ -60,6 +61,7 @@ public class WagonRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_WAGON_BY_ID);
 			preparedStatement.setInt(1, wagonId);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 			if(result.next()) {
 				Wagon wagon = new Wagon();
 				wagon.setNumber(result.getInt("number"));
@@ -81,6 +83,7 @@ public class WagonRepository {
 			preparedStatement.setInt(1,wagon.getNumber());
 			preparedStatement.setString(2,wagon.getDescription());
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
 			System.out.println("error " + e);
@@ -93,7 +96,7 @@ public class WagonRepository {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_WAGONS);
 			ResultSet result = preparedStatement.executeQuery();
-
+			connection.close();
 			while (result.next()) {
 				Wagon wagon = new Wagon();
 				wagon.setId(result.getInt("wagon_id"));
@@ -114,7 +117,7 @@ public class WagonRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_WAGONS_BY_TRAIN_ID);
 			preparedStatement.setInt(1, trainId);
 			ResultSet result = preparedStatement.executeQuery();
-
+			connection.close();
 			while (result.next()) {
 				Wagon wagon = new Wagon();
 				wagon.setId(result.getInt("wagon_id"));

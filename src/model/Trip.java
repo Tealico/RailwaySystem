@@ -35,6 +35,8 @@ public class Trip {
 		this.name = "";
 		this.description = "";
 		this.reservations = null;
+		this.price=0;
+		this.date=null;
 		this.train = new Train();
 	}
 

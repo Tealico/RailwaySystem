@@ -41,12 +41,14 @@ public class UserRepository {
 			preparedStatement.setInt(1,usertypeId);
 			preparedStatement.setInt(2,userId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 			return usertypeId;
 		}catch(SQLException e) {
 			System.out.println("error " + e);
 			return 0;
 		}
+		
 	}
 	
 	public User getUserById(int userId) {
@@ -55,6 +57,7 @@ public class UserRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID);
 			preparedStatement.setInt(1, userId);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 			
 			if(result.next()) {
 				User user= new User();
@@ -90,6 +93,7 @@ public class UserRepository {
 			preparedStatement.setString(6,u.getEmail());
 			preparedStatement.setInt(7,2); 
 			preparedStatement.executeUpdate();
+			connection.close();
 		} catch (SQLException e) {
 			System.out.println("error " + e);
 			throw new CustomException("Username already exist.");
@@ -102,7 +106,7 @@ public class UserRepository {
 			preparedStatement.setString(1, u.getUsername());
 			preparedStatement.setString(2, u.getPassword());
 			ResultSet result = preparedStatement.executeQuery();
-
+			connection.close();
 			
 			if(result.next()) {
 				User user = new User();
@@ -130,6 +134,7 @@ public class UserRepository {
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER); 
 			preparedStatement.setInt(1, userId);
 			int result = preparedStatement.executeUpdate();
+			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch (SQLException e) {
 			System.out.println("error " + e);
@@ -141,6 +146,7 @@ public class UserRepository {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USERS);
 			ResultSet result = preparedStatement.executeQuery();
+			connection.close();
 
 			while (result.next()) {
 				User user = new User();

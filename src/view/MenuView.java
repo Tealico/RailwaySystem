@@ -19,7 +19,7 @@ public class MenuView {
 		} else if(number == 2) {
 			new AuthenticationView().loginMenu();
 		}
-		else if(number > 2 || number < 1 ) {
+		else {
 			System.out.println("Wrong menu.");
 			this.start();
 		}
