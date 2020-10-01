@@ -211,6 +211,7 @@ public class TripView {
 		String answer3 = in.next();
 		if(answer3.equalsIgnoreCase("y")) {
 			System.out.print("Put new date (dd-MM-yyyy HH:mm): ");
+			in.nextLine();
 			String dateString=in.nextLine();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 			LocalDateTime date = LocalDateTime.parse(dateString,formatter);

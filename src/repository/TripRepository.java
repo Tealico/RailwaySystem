@@ -26,7 +26,8 @@ public class TripRepository {
 			+ "join location el on el.location_id=trip.endlocation "
 			+ "where trip.trip_id=?";
 	private final String UPDATE_TRIP="update trip "
-			+ "set name=?, description=?,date=?,price=?,trainId=?";
+			+ "set name=?, description=?,date=?,price=?,train_id=? "
+			+ "where trip.trip_id=?";
 	public final String GET_ALL_TRIP="select * from trip "
 			+ "order by trip.trip_id";
 	
@@ -102,22 +103,22 @@ public class TripRepository {
 		return null;
 	}
 	
-	public Trip updateTrip(Trip trip,int trainId) {
+	public void updateTrip(Trip trip,int trainId) {
 		try {
 			Connection connection=ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TRIP);
 			preparedStatement.setString(1,trip.getName());
 			preparedStatement.setString(2,trip.getDescription());
-			preparedStatement.setInt(3,trip.getPrice());
-			preparedStatement.setTimestamp(4, Timestamp.valueOf(trip.getDate()));
+			preparedStatement.setTimestamp(3, Timestamp.valueOf(trip.getDate()));
+			preparedStatement.setInt(4,trip.getPrice());
 			preparedStatement.setInt(5, trainId);
+			preparedStatement.setInt(6, trip.getId());
 			int result = preparedStatement.executeUpdate();
 			connection.close();
 			System.out.println("Number of records affected :: " + result);
 		}catch(SQLException e) {
 			System.out.println("error " + e);
 		}
-		return null;
 	}
 	public ArrayList<Trip> getAllTrips() {
 		ArrayList<Trip> trips = new ArrayList<>();

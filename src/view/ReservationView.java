@@ -134,17 +134,11 @@ public class ReservationView {
 			System.out.println("Reservation Details");
 			System.out.println("-------------------");
 			if(user.getType() == UserType.ADMIN) {
-				System.out.println("1 | Delete");
-				System.out.println("-------------------");
-				System.out.println("2 | Home");
+				System.out.println("1 | Home");
 				System.out.println("-------------------");
 				System.out.println("Put the number: ");
 				int number=in.nextInt();
 				if(number == 1) {
-					reservationService.deleteReservation(reservation.getId());
-					new TripView(adminHome).listTrips(user);
-				}
-				else if(number == 2) {
 					adminHome.adminMenu();
 				}
 				else {
@@ -165,7 +159,7 @@ public class ReservationView {
 					this.reservationDetails(reservationId, user);
 				}
 				else if(number == 2) {
-					reservationService.deleteReservation(reservation.getId());
+					reservationService.deleteReservation(reservation.getId(),user.getId());
 					this.listUserReservations(user);
 				}
 				else if(number == 3) {
@@ -206,7 +200,7 @@ public class ReservationView {
 	}
 	public void updateReservation(Reservation reservation) {
 		Scanner in=new Scanner(System.in);
-		int wagonId = reservation.getWagon().getId(); // ne rast se nuk ndrron vagon, wagonId ngelet sa e te parit
+		int wagonId = reservation.getWagon().getId(); 
 		System.out.println("Do you want to change wagon?[y/n] ");
 		String answer1 = in.next();
 		if(answer1.equalsIgnoreCase("y")) {
@@ -216,7 +210,7 @@ public class ReservationView {
 				System.out.println(w.getId()+"   |  Wagon number: "+w.getNumber());
 			}
 			System.out.print("Put the wagon: ");
-			wagonId=in.nextInt(); // ne rast se ndron vagon
+			wagonId=in.nextInt(); 
 		}
 		System.out.println("Do you want to change seat?[y/n] ");
 		String answer2 = in.next();

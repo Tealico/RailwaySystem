@@ -33,8 +33,14 @@ public class ReservationService {
 		Reservation reservation=reservationRepository.getReservationById(reservationId);
 		return reservation;
 	}
-	public void deleteReservation(int reservationId) {
-		reservationRepository.deleteReservation(reservationId);
+	public void deleteReservation(int reservationId,int userId) {
+		Reservation reservation =reservationRepository.getReservationById(reservationId);
+		if(reservation.getUser().getId() != userId) {
+			System.out.println("Unauthorized.");
+			 return;
+		}
+		 reservationRepository.deleteReservation(reservationId);
+		
 	}
 	public void updateReservation(Reservation reservation, int newSeatId) {
 		
